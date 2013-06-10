@@ -3,5 +3,43 @@
     <modules>
         <Made_S3>1.0.0</Made_S3>
     </modules>
+    <global>
+        <models>
+            <made_s3>
+                <class>Made_S3_Model</class>
+            </made_s3>
+            <core>
+                <rewrite>
+                    <file_uploader>Made_S3_Model_File_Uploader</file_uploader>
+                </rewrite>
+            </core>
+            <adminhtml>
+                <rewrite>
+                    <system_config_source_storage_media_storage>Made_S3_Model_System_Config_Source_Storage_Media_Storage</system_config_source_storage_media_storage>
+                </rewrite>
+            </adminhtml>
+        </models>
+        <helpers>
+            <made_s3>
+                <class>Made_S3_Helper</class>
+            </made_s3>
+        </helpers>
+    	<events>
+            <controller_front_init_before>
+                <observers>
+                    <made_s3_init_aws_sdk>
+                        <class>made_s3/observer</class>
+                        <method>initAwsSdk</method>
+                    </made_s3_init_aws_sdk>
+                </observers>
+            </controller_front_init_before>
+        </events>
+    </global>
+    <default>
+        <system>
+            <s3>
+                <bucket_name>magento-media</bucket_name>
+            </s3>
+        </system>
+    </default>
 </config>
-

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <sections>
+        <system translate="label" module="core">
+            <groups>
+                <s3 translate="label">
+                    <label>Amazon S3 Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>899</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <bucket_name translate="label comment">
+                            <label>Bucket Name</label>
+                            <comment>Will be created automatically if it doesn't exist</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </bucket_name>
+                        <access_key_id translate="label">
+                            <label>Amazon Access Key ID</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </access_key_id>
+                        <access_secret translate="label">
+                            <label>Amazon Access Secret</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </access_secret>
+                    </fields>
+                </s3>
+            </groups>
+        </system>
+    </sections>
+</config>
