@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Made_S3>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Made_S3>
+    </modules>
+</config>
