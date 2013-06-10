@@ -27,7 +27,6 @@ class Made_S3_Helper_Data extends Mage_Core_Helper_Abstract
     
     public function useS3()
     {
-        return Mage::getStoreConfig('system/media_storage_configuration/media_storage') == Made_S3_Model_File_Storage::STORAGE_MEDIA_S3
-                && $this->_client;
+        return Mage::getStoreConfig('system/s3/active') && $this->_client;
     }
 }
