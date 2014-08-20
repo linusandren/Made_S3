@@ -27,6 +27,6 @@ class Made_S3_Helper_Data extends Mage_Core_Helper_Abstract
     
     public function useS3()
     {
-        return Mage::getStoreConfig('system/s3/active') && $this->_client;
+        return Mage::getStoreConfig('system/s3/active');
     }
 }

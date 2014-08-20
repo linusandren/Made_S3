@@ -18,9 +18,10 @@ class Made_S3_Model_Observer
      */
     public function initAwsSdk(Varien_Event_Observer $observer)
     {
-        if (!Mage::helper('made_s3')) {
+        if (!Mage::helper('made_s3')->useS3()) {
             return;
         }
+
         $client = S3Client::factory(array(
             'key' => Mage::getStoreConfig('system/s3/access_key_id'),
             'secret' => Mage::getStoreConfig('system/s3/access_secret'),
