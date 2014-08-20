@@ -1,5 +1,5 @@
-code/S3               app/code/community/Made/S3
+src/code/*            app/code/community/Made
+src/lib/*             lib/
 Made_S3.xml           app/etc/modules/Made_S3.xml
 package.xml           var/connect/Made_S3.xml
-lib/*                 lib/
 
