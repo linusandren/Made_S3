@@ -1,0 +1,21 @@
+{
+    "name": "madepeople/made-s3",
+    "license": "BSD-4-Clause",
+    "type": "magento-module",
+    "description": "Magento module that uploads resized images to Amazon S3",
+    "authors": [
+        {
+            "name": "Jonathan Selander",
+            "email":"jonathan@madepeople.se"
+        }
+    ],
+    "require": {
+        "magento-hackathon/magento-composer-installer": "*"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://packages.firegento.com"
+        }
+    ]
+}
