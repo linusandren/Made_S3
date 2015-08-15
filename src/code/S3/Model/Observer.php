@@ -1,34 +1,36 @@
 <?php
+
 /**
  * @author jonathan@madepeople.se
  */
-
-// This is a bit on the lol side, but it does the work and the S3Client needs
-// to be globally available anyway
-require_once dirname(__FILE__) . '/../aws/aws-autoloader.php';
-use Aws\S3\S3Client;
-
 class Made_S3_Model_Observer
 {
     /**
-     * Load the required AWS modules and set up the S3 stream wrapper, if
-     * S3 is chosen for media storage
-     * 
+     * Uploads the image to S3 if a bucket and everything is defined in admin
+     *
      * @param Varien_Event_Observer $observer
      */
-    public function initAwsSdk(Varien_Event_Observer $observer)
+    public function uploadResizedImageToS3(Varien_Event_Observer $observer)
     {
-        if (!Mage::helper('made_s3')->useS3()) {
+        if (!Mage::getStoreConfig('system/s3/upload_resized_images')) {
             return;
         }
 
-        $client = S3Client::factory(array(
-            'key' => Mage::getStoreConfig('system/s3/access_key_id'),
-            'secret' => Mage::getStoreConfig('system/s3/access_secret'),
-        ));
+        try {
+            $client = Mage::helper('made_s3')->getClient();
+            $bucket = Mage::getStoreConfig('system/s3/bucket');
+            $destination = $observer->getEvent()->getDestination();
 
-        $client->registerStreamWrapper();
-        
-        Mage::helper('made_s3')->setClient($client);
+            $baseDir = Mage::getBaseDir();
+            $s3Destination = preg_replace("#^$baseDir#", '', $destination);
+
+            $client->putObject(array(
+                'Bucket' => $bucket,
+                'SourceFile' => $destination,
+                'Key' => $s3Destination
+            ));
+        } catch (Exception $e) {
+            Mage::logException($e);
+        }
     }
 }

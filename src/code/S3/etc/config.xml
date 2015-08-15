@@ -8,26 +8,24 @@
             <made_s3>
                 <class>Made_S3_Model</class>
             </made_s3>
-            <core>
-                <rewrite>
-                    <file_uploader>Made_S3_Model_File_Uploader</file_uploader>
-                </rewrite>
-            </core>
         </models>
         <helpers>
             <made_s3>
                 <class>Made_S3_Helper</class>
             </made_s3>
         </helpers>
-    	<events>
-            <controller_front_init_before>
-                <observers>
-                    <made_s3_init_aws_sdk>
-                        <class>made_s3/observer</class>
-                        <method>initAwsSdk</method>
-                    </made_s3_init_aws_sdk>
-                </observers>
-            </controller_front_init_before>
-        </events>
     </global>
+    <frontend>
+        <events>
+            <made_image_save_after>
+                <observers>
+                    <upload_resized_image_to_s3>
+                        <type>singleton</type>
+                        <model>made_s3/observer</model>
+                        <method>uploadResizedImageToS3</method>
+                    </upload_resized_image_to_s3>
+                </observers>
+            </made_image_save_after>
+        </events>
+    </frontend>
 </config>

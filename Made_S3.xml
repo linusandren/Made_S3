@@ -4,6 +4,9 @@
         <Made_S3>
             <active>true</active>
             <codePool>community</codePool>
+            <depends>
+                <Made_Image />
+            </depends>
         </Made_S3>
     </modules>
 </config>
