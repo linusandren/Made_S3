@@ -18,7 +18,7 @@ class Made_S3_Model_Observer
 
         try {
             $client = Mage::helper('made_s3')->getClient();
-            $bucket = Mage::getStoreConfig('system/s3/bucket');
+            $bucket = Mage::getStoreConfig('system/s3/bucket_name');
             $destination = $observer->getEvent()->getDestination();
 
             $baseDir = Mage::getBaseDir();
