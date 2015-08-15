@@ -26,6 +26,15 @@
                     </upload_resized_image_to_s3>
                 </observers>
             </made_image_save_after>
+            <made_image_geturl>
+                <observers>
+                    <get_image_cdn_url>
+                        <type>singleton</type>
+                        <model>made_s3/observer</model>
+                        <method>getImageCdnUrl</method>
+                    </get_image_cdn_url>
+                </observers>
+            </made_image_geturl>
         </events>
     </frontend>
 </config>
