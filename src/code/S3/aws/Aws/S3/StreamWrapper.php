@@ -355,8 +355,11 @@ class StreamWrapper
         $params = $this->getParams($path);
         $this->clearStatInfo($path);
 
-        if (!$params['Bucket'] || $params['Key']) {
+        if (empty($params['Bucket'])) {
             return false;
+        }
+        if (!empty($params['Key'])) {
+            return true;
         }
 
         try {
@@ -375,6 +378,11 @@ class StreamWrapper
         } catch (\Exception $e) {
             return $this->triggerError($e->getMessage());
         }
+    }
+
+    public function is_writable($filename)
+    {
+        return true;
     }
 
     /**

@@ -1,63 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
     <sections>
-        <system translate="label" module="core">
+        <system>
             <groups>
-                <s3 translate="label">
-                    <label>Amazon S3 Settings</label>
-                    <frontend_type>text</frontend_type>
-                    <sort_order>899</sort_order>
-                    <show_in_default>1</show_in_default>
-                    <show_in_website>1</show_in_website>
-                    <show_in_store>1</show_in_store>
+                <media_storage_configuration>
                     <fields>
-                    </fields>
-                </s3>
-                <media_storage_configuration translate="label" module="core">
-                    <fields>
-                        <media_storage translate="label">
-                            <source_model>made_s3/system_config_source_storage_media_storage</source_model>
-                        </media_storage>
-                        <synchronize translate="label comment">
-                            <frontend_model>made_s3/system_config_system_storage_media_synchronize</frontend_model>
-                        </synchronize>
-                        <s3_bucket_name translate="label">
-                            <label>S3 Bucket Name</label>
-                            <comment>It is recommended to use an empty bucket for the media storage, because a sub directory cannot be chosen.</comment>
-                            <frontend_type>text</frontend_type>
-                            <sort_order>200</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
-                            <show_in_store>0</show_in_store>
-                            <depends><media_storage>3</media_storage></depends>
-                        </s3_bucket_name>
-                        <s3_access_key_id translate="label">
-                            <label>Amazon Access Key ID</label>
-                            <frontend_type>text</frontend_type>
-                            <sort_order>210</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
-                            <show_in_store>0</show_in_store>
-                            <depends><media_storage>3</media_storage></depends>
-                        </s3_access_key_id>
-                        <s3_access_secret translate="label">
-                            <label>Amazon Access Secret</label>
-                            <frontend_type>text</frontend_type>
-                            <sort_order>220</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
-                            <show_in_store>0</show_in_store>
-                            <depends><media_storage>3</media_storage></depends>
-                        </s3_access_secret>
                         <s3_cdn_url translate="label comment">
-                            <label>CDN URL</label>
+                            <label>Amazon S3 CDN URL</label>
                             <comment>The URL (preferably HTTPS) to the S3 bucket or Cloudfront distribution where we upload the image cache.</comment>
                             <frontend_type>text</frontend_type>
-                            <sort_order>230</sort_order>
+                            <sort_order>1000</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
-                            <depends><media_storage>3</media_storage></depends>
                         </s3_cdn_url>
                     </fields>
                 </media_storage_configuration>

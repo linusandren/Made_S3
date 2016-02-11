@@ -8,6 +8,11 @@
             <made_s3>
                 <class>Made_S3_Model</class>
             </made_s3>
+            <core>
+                <rewrite>
+                    <file_storage>Made_S3_Model_File_Storage</file_storage>
+                </rewrite>
+            </core>
         </models>
         <blocks>
             <made_s3>
@@ -42,4 +47,17 @@
             </made_image_geturl>
         </events>
     </frontend>
+    <adminhtml>
+        <events>
+            <catalog_product_gallery_upload_image_after>
+                <observers>
+                    <upload_gallery_image>
+                        <type>singleton</type>
+                        <model>made_s3/observer</model>
+                        <method>uploadGalleryImage</method>
+                    </upload_gallery_image>
+                </observers>
+            </catalog_product_gallery_upload_image_after>
+        </events>
+    </adminhtml>
 </config>

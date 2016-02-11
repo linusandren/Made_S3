@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding="utf-8"?>
+<config>
+    <global>
+        <cache>
+            <request_processors>
+                <made_s3>Made_S3_Model_Processor</made_s3>
+            </request_processors>
+        </cache>
+    </global>
+</config>
