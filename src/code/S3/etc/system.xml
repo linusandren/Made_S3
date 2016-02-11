@@ -51,7 +51,7 @@
                         </s3_access_secret>
                         <s3_cdn_url translate="label comment">
                             <label>CDN URL</label>
-                            <comment>The URL (preferable HTTPS) to the S3 bucket or Cloudfront distribution where we upload the image cache.</comment>
+                            <comment>The URL (preferably HTTPS) to the S3 bucket or Cloudfront distribution where we upload the image cache.</comment>
                             <frontend_type>text</frontend_type>
                             <sort_order>230</sort_order>
                             <show_in_default>1</show_in_default>

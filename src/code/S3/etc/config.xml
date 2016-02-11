@@ -9,6 +9,11 @@
                 <class>Made_S3_Model</class>
             </made_s3>
         </models>
+        <blocks>
+            <made_s3>
+                <class>Made_S3_Block</class>
+            </made_s3>
+        </blocks>
         <helpers>
             <made_s3>
                 <class>Made_S3_Helper</class>

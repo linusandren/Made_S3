@@ -4,7 +4,7 @@
 <script type="text/javascript">
     //<![CDATA[
     Validation.add('required-synchronize', '<?php echo Mage::helper('core')->jsQuoteEscape($this->__('Synchronization is required.')) ?>', function(){
-        if ($('system_media_storage_configuration_media_storage').value === <?php echo Made_S3_Model_File_Storage::STORAGE_MEDIA_S3 ?>) {
+        if ($('system_media_storage_configuration_media_storage').value == <?php echo Made_S3_Model_File_Storage::STORAGE_MEDIA_S3 ?>) {
             return true;
         }
 
