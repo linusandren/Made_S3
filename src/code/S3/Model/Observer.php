@@ -57,24 +57,4 @@ class Made_S3_Model_Observer
         $mediaUrl = $cdnUrl . $path;
         $result->setUrl($mediaUrl);
     }
-
-    /**
-     * Uploads a product gallery image to S3. This event is convenient because
-     * magento has created the directory structure and everything for us and
-     * stored the image on disk. Due to this event we can consider the local
-     * file temporary and delete it when the S3 transfer is done.
-     *
-     * @param Varien_Event_Observer $observer
-     */
-    public function uploadGalleryImage(Varien_Event_Observer $observer)
-    {
-        $result = $observer->getResult();
-        if ($result['error'] !== 0) {
-            // Something went wrong, abort
-            return;
-        }
-
-        $action = $observer->getAction();
-
-    }
 }
