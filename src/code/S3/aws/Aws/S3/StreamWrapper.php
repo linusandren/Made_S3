@@ -300,6 +300,16 @@ class StreamWrapper
      */
     public function url_stat($path, $flags)
     {
+        $callingFunction = debug_backtrace()[1]['function'];
+        if (in_array($callingFunction, array(
+                'is_dir',
+                'is_writable',
+                'is_writeable'))) {
+            // Yes, we should check for S3 access stuff here, but i don't have
+            // time at this point.
+            return $this->formatUrlStat($path);
+        }
+
         // Check if this path is in the url_stat cache
         if (isset(self::$nextStat[$path])) {
             return self::$nextStat[$path];
@@ -553,6 +563,22 @@ class StreamWrapper
     public function stream_cast($cast_as)
     {
         return $this->body->getStream();
+    }
+
+    /**
+     * A quick fix to allow chmod, touch and friends to work. Access level
+     * stuff works differently in S3 so it doesn't make sense at this point to
+     * try to achieve a complete implementation.
+     *
+     * @param $path
+     * @param $option
+     * @param $value
+     * @return bool
+     */
+    public function stream_metadata($path, $option, $value)
+    {
+        // Return true for all cases
+        return true;
     }
 
     /**

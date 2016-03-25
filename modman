@@ -1,4 +1,5 @@
-src/code/*                      app/code/community/Made
+src/code/S3                     app/code/community/Made
+src/code/local/*                app/code/local/
 src/adminhtml/template/*        app/design/adminhtml/default/default/template/made/
 src/made_s3.xml                 app/etc/
 Made_S3.xml                     app/etc/modules/Made_S3.xml

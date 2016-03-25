@@ -34,9 +34,6 @@ class Made_S3_Model_Processor
                     'secret' => $accessSecret,
                 ));
                 $client->registerStreamWrapper();
-//                mkdir('s3://asselejlkfskjdfg/lolasdf/');
-//                var_dump(is_dir('s3://asselejlkfskjdfg/lolapeoridsf'));
-//                exit;
                 Made_S3_Helper_Data::setClient($client);
 
                 $appRoot = Mage::getRoot();
