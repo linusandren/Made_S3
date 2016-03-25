@@ -58,6 +58,13 @@
         </events>
     </frontend>
     <adminhtml>
+        <layout>
+            <updates>
+                <made_s3>
+                    <file>made/s3.xml</file>
+                </made_s3>
+            </updates>
+        </layout>
         <events>
             <catalog_product_gallery_upload_image_after>
                 <observers>
