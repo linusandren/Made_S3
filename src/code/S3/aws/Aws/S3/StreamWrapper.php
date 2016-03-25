@@ -369,6 +369,10 @@ class StreamWrapper
             return false;
         }
         if (!empty($params['Key'])) {
+            // A hack that allows us to create directories for the tree view in
+            // the CMS wysiwyg thing. This allows us to mkdir() things in S3
+            // that aren't only buckets.
+            file_put_contents($path.'/.mkdir', '.');
             return true;
         }
 

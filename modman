@@ -1,5 +1,6 @@
 src/code/S3                     app/code/community/Made/S3
 src/code/local/Varien/Io/*      app/code/local/Varien/Io/
+src/adminhtml/layout/*          app/design/adminhtml/default/default/layout/made/
 src/adminhtml/template/*        app/design/adminhtml/default/default/template/made/
 src/made_s3.xml                 app/etc/
 Made_S3.xml                     app/etc/modules/Made_S3.xml

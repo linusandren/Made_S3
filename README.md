@@ -62,4 +62,4 @@ https://s3-eu-west-1.amazonaws.com/magento-media/media/
 
 ## Notes
 
-There is one core override of Varien_Io_File. The reason is that the chdir() calls needed to have supressed warnings in order for the S3 magic to work. As far as I can see there is no issue with supressing these warnings. 
+There is one core copy-paste of Varien_Io_File. The reason is that the chdir() calls needed to have supressed warnings in order for the S3 magic to work. As far as I can see there is no issue with supressing these warnings. 
