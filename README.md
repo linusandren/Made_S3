@@ -54,12 +54,16 @@ Apart from actually creating a bucket and generating access keys with write acce
 
 Note that the bucket name is in the "Resource" section.
 
-In this specific case the bucket URL to use in media could look something like:
+In this specific case the bucket URL to use as media URL could look something like:
 
 ```
 https://s3-eu-west-1.amazonaws.com/magento-media/media/
 ```
 
+## Synchronizing an existing media library
+
+Due to the fact that all media is stored with the exact same structure as they would on a file system, and that we also maintain URLs correctly, synchronizing media can simply be done with a recursive using something like s3cmd. Have a look at [s3cmd sync](http://s3tools.org/s3cmd-sync).
+
 ## Notes
 
-There is one core copy-paste of Varien_Io_File. The reason is that the chdir() calls needed to have supressed warnings in order for the S3 magic to work. As far as I can see there is no issue with supressing these warnings. 
+There is one core copy paste of Varien_Io_File. The reason is that the chdir() calls needed to have supressed warnings in order for the S3 magic to work. As far as I can see there is no issue with supressing these warnings. 

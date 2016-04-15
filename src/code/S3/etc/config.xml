@@ -8,11 +8,6 @@
             <made_s3>
                 <class>Made_S3_Model</class>
             </made_s3>
-            <core>
-                <rewrite>
-                    <file_storage>Made_S3_Model_File_Storage</file_storage>
-                </rewrite>
-            </core>
             <cms>
                 <rewrite>
                     <wysiwyg_images_storage>Made_S3_Model_Cms_Wysiwyg_Images_Storage</wysiwyg_images_storage>
@@ -65,16 +60,5 @@
                 </made_s3>
             </updates>
         </layout>
-        <events>
-            <catalog_product_gallery_upload_image_after>
-                <observers>
-                    <upload_gallery_image>
-                        <type>singleton</type>
-                        <model>made_s3/observer</model>
-                        <method>uploadGalleryImage</method>
-                    </upload_gallery_image>
-                </observers>
-            </catalog_product_gallery_upload_image_after>
-        </events>
     </adminhtml>
 </config>

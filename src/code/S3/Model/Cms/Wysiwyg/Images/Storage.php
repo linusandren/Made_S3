@@ -10,6 +10,24 @@ class Made_S3_Model_Cms_Wysiwyg_Images_Storage
     extends Mage_Cms_Model_Wysiwyg_Images_Storage
 {
 
+    public function deleteDirectory($path)
+    {
+        $s3Client = Made_S3_Helper_Data::getClient();
+        if ($s3Client === null) {
+            return parent::deleteDirectory($path);
+        }
+
+        // prevent accidental root directory deleting
+        $rootCmp = rtrim($this->getHelper()->getStorageRoot(), DS);
+        $pathCmp = rtrim($path, DS);
+
+        if ($rootCmp == $pathCmp) {
+            Mage::throwException(Mage::helper('cms')->__('Cannot delete root directory %s.', $path));
+        }
+
+        unlink($path);
+    }
+
     /**
      * Simply iterate over the S3 objects using the stream wrapper, only
      * what we consider directories
