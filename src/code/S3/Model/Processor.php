@@ -20,6 +20,12 @@ class Made_S3_Model_Processor
      */
     public function extractContent($content)
     {
+        // We can actually manage the kraken callback here, because we want it
+        // to be fast and we want to do nothing
+        if (preg_match('#\?kraken_callback#', $_SERVER['REQUEST_URI'])) {
+            return 'OK';
+        }
+
         $config = Mage::getConfig();
         $s3 = $config->getNode('global/s3');
         if ($s3 !== false) {

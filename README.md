@@ -1,8 +1,8 @@
-# S3 module for Magento
+# S3/Kraken module for Magento
 
 A module that when enabled is supposed to replace all media related operations from working on disk, to work on S3.
 
-This obviously comes with some caveats, such as resizing not being done on demand as part of templates anymore. Instead, resize configurations are set up in admin and then referenced in templates. The actual resizing is done on upload or by a background job.
+This obviously comes with some caveats, such as resizing not being done on demand as part of templates anymore. Instead, resize configurations are set up in admin and then referenced in templates. The actual resizing is done on upload or by a background job (TO DO).
 
 ## Magento Configuration
 
@@ -71,6 +71,30 @@ https://s3-eu-west-1.amazonaws.com/magento-media/media/
 ## Synchronizing an existing media library
 
 Due to the fact that all media is stored with the exact same structure as they would on a file system, and that we also maintain URLs correctly, synchronizing media can simply be done with a recursive using something like s3cmd. Have a look at [s3cmd sync](http://s3tools.org/s3cmd-sync).
+
+## Kraken Image Processing
+
+Kraken is used for image processing and uploading to S3. This means all resize and processing settings are defined in advance, in `System / Configuration / Advanced / System / Amazon S3/Kraken/CDN Settings / Kraken Processing Settings`. Every type of image resize setting, whether it's processing of an arbitrary uploaded image or the batch resizing of product images, they need to be entered in there. When a product image is uploaded and the product is saved, all processing settings will be applied on the image, making sure everything is accessible in templates.
+
+### Referencing Resized Product Images
+
+In order to get an effective resize feature, all images are resized using Kraken when a product is saved with a new image in admin. This also meant that a new folder structure for resized images needed to be created. It also meant that a different method should be used in templates when displaysing images. The default image resizer touches the file system and creates one resized copy for every image. That's not very efficient and we don't need it at all since images are not resized on demand anymore.
+
+To use the new resize URL helper, replace
+
+```php
+<?php
+$this->helper('catalog/image')->init($_product, 'image');
+```
+
+with
+
+```php
+<?php
+$this->helper('made_s3')->getImageCdnUrl($_product->getImage(), 'main_image');
+```
+
+In this example, a key "main_image" has been created as a Kraken processing setting in admin.
 
 ## Notes
 

@@ -31,6 +31,18 @@
         </helpers>
     </global>
     <frontend>
+        <secure_url>
+            <made_s3>/made_s3</made_s3>
+        </secure_url>
+        <routers>
+            <made_s3>
+                <use>standard</use>
+                <args>
+                    <module>Made_S3</module>
+                    <frontName>made_s3</frontName>
+                </args>
+            </made_s3>
+        </routers>
         <events>
             <made_image_geturl>
                 <observers>

@@ -1,21 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
     <sections>
-        <system>
+        <system translate="label" module="core">
             <groups>
-                <media_storage_configuration>
+                <s3 translate="label">
+                    <label>Amazon S3/Kraken/CDN Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>899</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
                     <fields>
-                        <s3_cdn_url translate="label comment">
-                            <label>Amazon S3 CDN URL</label>
-                            <comment>The URL (preferably HTTPS) to the S3 bucket or Cloudfront distribution where we upload the image cache.</comment>
-                            <frontend_type>text</frontend_type>
-                            <sort_order>1000</sort_order>
+                        <kraken_settings translate="label comment">
+                            <label>Kraken Processing Settings</label>
+                            <comment><![CDATA[
+                            These settings determine how product images should be resized and how arbitrary uploaded images should be processed. In the case of a product image, a "key" is used to identify resizing parameters which can later be referenced in templates. For CMS images, the key is a regular expression which should match any directory structure on S3 (`#' is used as a delimiter).
+                            <br><br><a href="https://kraken.io/docs/image-resizing" target="_blank">Click here for documentation of the different Kraken settings.</a>
+                            ]]> </comment>
+                            <frontend_model>made_s3/system_config_krakenSettings</frontend_model>
+                            <backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+                            <sort_order>100</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>0</show_in_website>
                             <show_in_store>0</show_in_store>
-                        </s3_cdn_url>
+                        </kraken_settings>
+                        <cdn_url translate="label comment">
+                            <label>CDN URL</label>
+                            <comment>The URL (preferably HTTPS) CDN distribution which uses the bucket set in local.xml as origin.</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </cdn_url>
                     </fields>
-                </media_storage_configuration>
+                </s3>
             </groups>
         </system>
     </sections>
