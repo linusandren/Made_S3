@@ -1,6 +1,6 @@
 <?php
 
-class Kraken_Kraken {
+class Kraken_Client {
     protected $auth = array();
 
     public function __construct($key = '', $secret = '') {

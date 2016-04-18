@@ -25,6 +25,10 @@ The S3 configuration is done in local.xml. Since we need to take over media mana
     <!-- The S3 bucket where we want to put all media -->
     <bucket_name>magento-media</bucket_name>
     
+    <!-- The region where the bucket is, a full list of regions can
+         be found here: http://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region -->
+    <region>us-east-1</region>
+
     <!-- Kraken.io API credentials -->
     <kraken_key>key</kraken_key>
     <kraken_secret>secret</kraken_secret>

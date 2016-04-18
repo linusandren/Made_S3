@@ -32,15 +32,6 @@
     </global>
     <frontend>
         <events>
-            <made_image_save_after>
-                <observers>
-                    <upload_resized_image_to_s3>
-                        <type>singleton</type>
-                        <model>made_s3/observer</model>
-                        <method>uploadResizedImageToS3</method>
-                    </upload_resized_image_to_s3>
-                </observers>
-            </made_image_save_after>
             <made_image_geturl>
                 <observers>
                     <get_image_cdn_url>

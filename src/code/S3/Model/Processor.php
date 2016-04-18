@@ -28,17 +28,28 @@ class Made_S3_Model_Processor
                 $accessKeyId = (string)$s3->access_key_id;
                 $accessSecret = (string)$s3->access_secret;
                 $bucketName = (string)$s3->bucket_name;
+                $region = (string)$s3->region;
+                if (empty($region)) {
+                    // This is the default one according to documentation
+                    $region = 'us-east-1';
+                }
 
                 $s3client = S3Client::factory(array(
                     'key' => $accessKeyId,
                     'secret' => $accessSecret,
+                    'region' => $region,
                 ));
                 Made_S3_Helper_Data::setClient($s3client);
 
                 $krakenKey = (string)$s3->kraken_key;
                 $krakenSecret = (string)$s3->kraken_secret;
-                $kraken = new Kraken_Kraken($krakenKey, $krakenSecret);
-                Kraken_StreamWrapper::register($kraken, $s3client);
+                $kraken = new Kraken_Client($krakenKey, $krakenSecret);
+                Kraken_StreamWrapper::register($kraken, $s3client, array(
+                    's3_key' => $accessKeyId,
+                    's3_secret' => $accessSecret,
+                    's3_bucket' => $bucketName,
+                    's3_region' => $region,
+                ));
 
                 $appRoot = Mage::getRoot();
                 $root = dirname($appRoot);
