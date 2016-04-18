@@ -301,6 +301,10 @@ class StreamWrapper
     public function url_stat($path, $flags)
     {
         $callingFunction = debug_backtrace()[1]['function'];
+        if ($callingFunction === 'url_stat') {
+            // Probably proxied from Kraken
+            $callingFunction = debug_backtrace()[2]['function'];
+        }
         if (in_array($callingFunction, array(
                 'is_dir',
                 'is_writable',

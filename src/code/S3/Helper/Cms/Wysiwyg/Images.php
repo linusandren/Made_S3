@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Overridden because realpath doesn't speak s3:// and we need wysiwyg uploads
+ * Overridden because realpath doesn't speak kraken:// and we need wysiwyg uploads
  * and the whole media browser to work correctly.
  *
  * @author jonathan@madepeople.se
@@ -18,7 +18,7 @@ class Made_S3_Helper_Cms_Wysiwyg_Images extends Mage_Cms_Helper_Wysiwyg_Images
     {
         if (!$this->_currentUrl) {
             $mediaPath = Mage::getConfig()->getOptions()->getMediaDir();
-            if (preg_match('#^s3://#', $mediaPath)) {
+            if (preg_match('#^kraken://#', $mediaPath)) {
                 $path = str_replace($mediaPath, '', $this->getCurrentPath());
                 $path = trim($path, DS);
                 $this->_currentUrl = Mage::app()->getStore($this->_storeId)->getBaseUrl('media') .
@@ -40,7 +40,7 @@ class Made_S3_Helper_Cms_Wysiwyg_Images extends Mage_Cms_Helper_Wysiwyg_Images
     {
         $storageRoot = $this->getStorageRoot();
         $storageRoot = preg_replace('#/$#', '', $storageRoot);
-        if (preg_match('#^s3://#', $storageRoot)) {
+        if (preg_match('#^kraken://#', $storageRoot)) {
             $path = $this->idDecode($id);
             if (!strstr($path, $storageRoot)) {
                 $path = $storageRoot . DS . $path;
@@ -62,7 +62,7 @@ class Made_S3_Helper_Cms_Wysiwyg_Images extends Mage_Cms_Helper_Wysiwyg_Images
     {
         if (!$this->_currentPath) {
             $storageRoot = $this->getStorageRoot();
-            if (preg_match('#^s3://#', $storageRoot)) {
+            if (preg_match('#^kraken://#', $storageRoot)) {
                 // It's actually the same for us
                 $currentPath = $storageRoot;
                 $node = $this->_getRequest()->getParam($this->getTreeNodeName());

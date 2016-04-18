@@ -29,12 +29,16 @@ class Made_S3_Model_Processor
                 $accessSecret = (string)$s3->access_secret;
                 $bucketName = (string)$s3->bucket_name;
 
-                $client = S3Client::factory(array(
+                $s3client = S3Client::factory(array(
                     'key' => $accessKeyId,
                     'secret' => $accessSecret,
                 ));
-                $client->registerStreamWrapper();
-                Made_S3_Helper_Data::setClient($client);
+                Made_S3_Helper_Data::setClient($s3client);
+
+                $krakenKey = (string)$s3->kraken_key;
+                $krakenSecret = (string)$s3->kraken_secret;
+                $kraken = new Kraken_Kraken($krakenKey, $krakenSecret);
+                Kraken_StreamWrapper::register($kraken, $s3client);
 
                 $appRoot = Mage::getRoot();
                 $root = dirname($appRoot);
@@ -42,7 +46,7 @@ class Made_S3_Model_Processor
                 $options = $config->getOptions();
                 $currentMediadir = $options->getMediaDir();
 
-                $mediaDir = 's3://' . $bucketName
+                $mediaDir = 'kraken://' . $bucketName
                     . preg_replace("#^$root#", '', $currentMediadir);
 
                 $uploadDir = $mediaDir . DS . 'upload';
