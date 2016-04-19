@@ -83,7 +83,7 @@ class Made_S3_Helper_Data extends Mage_Core_Helper_Abstract
         $mediaPath = Mage::getConfig()->getOptions()->getMediaDir();
         $url = str_replace($mediaPath, '', $url);
         $url = trim($url, DS);
-        $url = Mage::app()->getStore($this->_storeId)->getBaseUrl('media') .
+        $url = Mage::app()->getStore()->getBaseUrl('media') .
             $url;
         return $url;
     }
@@ -99,7 +99,7 @@ class Made_S3_Helper_Data extends Mage_Core_Helper_Abstract
         $filename = basename($image);
         $setting = $this->getKrakenSetting($key);
         $path = $this->getKrakenResizePath($setting) . $filename;
-        $cdnUrl = Mage::getStoreConfig('system/media_storage_configuration/s3_cdn_url');
+        $cdnUrl = Mage::getStoreConfig('system/s3/cdn_url');
         $url = $cdnUrl . $path;
         return $url;
     }

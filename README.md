@@ -99,3 +99,7 @@ In this example, a key "main_image" has been created as a Kraken processing sett
 ## Notes
 
 There is one core copy paste of Varien_Io_File. The reason is that the chdir() calls needed to have supressed warnings in order for the S3 magic to work. As far as I can see there is no issue with supressing these warnings. 
+
+### Known Limitations
+
+* This module does not support watermarks or any other core image manipulation setting
