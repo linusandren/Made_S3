@@ -29,6 +29,13 @@
                 </rewrite>
             </cms>
         </helpers>
+        <resources>
+            <made_s3_setup>
+                <setup>
+                    <module>Made_S3</module>
+                </setup>
+            </made_s3_setup>
+        </resources>
     </global>
     <frontend>
         <secure_url>
