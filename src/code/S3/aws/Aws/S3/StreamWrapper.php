@@ -304,6 +304,9 @@ class StreamWrapper
         if ($callingFunction === 'call_user_func_array') {
             // Probably proxied from Kraken
             $callingFunction = debug_backtrace()[4]['function'];
+        } else if ($callingFunction === '__call') {
+            // PHP 7
+            $callingFunction = debug_backtrace()[2]['function'];
         }
         if ($flags === 6) {
             // For some reason move_uploaded_file sends flag === 6 which should
