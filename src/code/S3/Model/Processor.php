@@ -40,10 +40,14 @@ class Made_S3_Model_Processor
                     $region = 'us-east-1';
                 }
 
-                $s3client = S3Client::factory(array(
-                    'key' => $accessKeyId,
-                    'secret' => $accessSecret,
+                $s3client = Aws\S3\S3Client::factory(array(
+                    'credentials' => [
+                        'key' => $accessKeyId,
+                        'secret' => $accessSecret,
+                    ],
                     'region' => $region,
+                    'version' => 'latest'
+
                 ));
                 Made_S3_Helper_Data::setClient($s3client);
 

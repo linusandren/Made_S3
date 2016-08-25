@@ -41,11 +41,19 @@ class Made_S3_Model_Cms_Wysiwyg_Images_Storage
             return parent::getDirsCollection($path);
         }
 
+        if (!preg_match('#/$#', $path)) {
+            $path .= '/';
+        }
+
         $collection = new Varien_Data_Collection;
         $handle = opendir($path);
         while (false !== ($file = readdir($handle))) {
-            if (!preg_match('#/#', $file)) {
+            if (!is_dir($path.$file)) {
                 // Only add directories
+                continue;
+            }
+            if ($file === '.mkdir') {
+                // Skip this one
                 continue;
             }
             $collection->addItem(new Varien_Object(array(
@@ -74,10 +82,14 @@ class Made_S3_Model_Cms_Wysiwyg_Images_Storage
 
         $helper = $this->getHelper();
 
+        if (!preg_match('#/$#', $path)) {
+            $path .= '/';
+        }
+
         $collection = new Varien_Data_Collection;
         $handle = opendir($path);
         while (false !== ($file = readdir($handle))) {
-            if (preg_match('#/#', $file)) {
+            if (is_dir($path.$file)) {
                 // Only add files
                 continue;
             }
