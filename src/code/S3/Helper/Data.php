@@ -57,6 +57,33 @@ class Made_S3_Helper_Data extends Mage_Core_Helper_Abstract
     }
 
     /**
+     * This method gets a kraken settings key from a magento core resize
+     * instance, but requires that an identical kraken settings entry exists.
+     *
+     * Right now this method only mathes the resize width and height, not
+     * crop mode, resize strategy or anything, because those settings are too
+     * specific
+     *
+     * THAT IS SUPER IMPORTANT, OTHERWISE IMAGE LINKS WILL BE BROKEN.
+     *
+     * @param $imageInstance
+     */
+    public function getKrakenSettingsKeyFromCoreSettings($imageInstance)
+    {
+        $settings = $this->getKrakenSettings();
+        foreach ($settings as $key => $setting) {
+            if ($setting['type'] !== 'product') {
+                continue;
+            }
+
+            if ($setting['resize_width'] == $imageInstance->getWidth()
+                && $setting['resize_height'] == $imageInstance->getHeight()) {
+                return $key;
+            }
+        }
+    }
+
+    /**
      * Returns the resize path for a given image, to also be used in templates
      *
      * @param $setting
@@ -92,12 +119,12 @@ class Made_S3_Helper_Data extends Mage_Core_Helper_Abstract
      * Used to fetch the CDN url of the resized version of the image
      *
      * @param $image
-     * @param $key
+     * @param $settingKey
      */
-    public function getImageCdnUrl($image, $key)
+    public function getImageCdnUrl($image, $settingKey)
     {
         $filename = basename($image);
-        $setting = $this->getKrakenSetting($key);
+        $setting = $this->getKrakenSetting($settingKey);
         $path = $this->getKrakenResizePath($setting) . $filename;
         $cdnUrl = Mage::getStoreConfig('system/s3/cdn_url');
         $url = $cdnUrl . $path;

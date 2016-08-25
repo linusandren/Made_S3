@@ -19,16 +19,18 @@ class Made_S3_Model_Observer
         if ($s3 !== false) {
             $active = (int)$s3->active;
             if ($active === 1) {
-                $cdnUrl = Mage::getStoreConfig('system/media_storage_configuration/s3_cdn_url');
+                $cdnUrl = Mage::getStoreConfig('system/s3/cdn_url');
                 if (empty($cdnUrl)) {
                     return;
                 }
 
                 $result = $observer->getEvent()->getResult();
                 $imageInstance = $observer->getEvent()->getImageInstance();
-                $baseDir = Mage::getBaseDir();
-                $path = str_replace($baseDir . DS, "", $imageInstance->getNewFile());
-                $mediaUrl = $cdnUrl . $path;
+
+                $helper = Mage::helper('made_s3');
+                $settingsKey = $helper->getKrakenSettingsKeyFromCoreSettings($imageInstance);
+                $mediaUrl = $helper->getImageCdnUrl($imageInstance->getNewFile(), $settingsKey);
+
                 $result->setUrl($mediaUrl);
             }
         }
