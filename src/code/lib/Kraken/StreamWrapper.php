@@ -118,11 +118,20 @@ class Kraken_StreamWrapper
                     $resizeSettings[] = $resizeSetting;
                     $i++;
                 }
+
+                // $url contains the URL to the image that kraken should optimize
                 $url = $helper->convertKrakenUrlToMediaUrl($path_to);
-                $callback = Mage::getBaseUrl() . '?kraken_callback';
+
+                $defaultStoreId = Mage::app()
+                    ->getWebsite(true)
+                    ->getDefaultGroup()
+                    ->getDefaultStoreId();
+                $callback = Mage::getUrl('made_s3/kraken/callback',
+                    array('_store' => $defaultStoreId));
+
                 $this->_request(array(
                     'wait' => false,
-                    'callback_url' => $callback, // We don't need to do much here
+                    'callback_url' => $callback,
                     'url' => $url,
                     'resize' => $resizeSettings,
                 ), 'url');

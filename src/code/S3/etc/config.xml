@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
     <modules>
-        <Made_S3>1.0.0</Made_S3>
+        <Made_S3>1.0.1</Made_S3>
     </modules>
     <global>
         <models>

@@ -48,7 +48,8 @@ class Made_S3_Model_Cms_Wysiwyg_Images_Storage
         $collection = new Varien_Data_Collection;
         $handle = opendir($path);
         while (false !== ($file = readdir($handle))) {
-            if (!is_dir($path.$file)) {
+            $filePath = $path.$file;
+            if (!is_dir($filePath)) {
                 // Only add directories
                 continue;
             }
@@ -58,7 +59,7 @@ class Made_S3_Model_Cms_Wysiwyg_Images_Storage
             }
             $collection->addItem(new Varien_Object(array(
                 'basename' => basename($file),
-                'filename' => $file,
+                'filename' => $filePath,
             )));
         }
         closedir($handle);
@@ -89,7 +90,8 @@ class Made_S3_Model_Cms_Wysiwyg_Images_Storage
         $collection = new Varien_Data_Collection;
         $handle = opendir($path);
         while (false !== ($file = readdir($handle))) {
-            if (is_dir($path.$file)) {
+            $filePath = $path.$file;
+            if (is_dir($filePath)) {
                 // Only add files
                 continue;
             }
@@ -100,7 +102,7 @@ class Made_S3_Model_Cms_Wysiwyg_Images_Storage
 
             $item = new Varien_Object(array(
                 'basename' => basename($file),
-                'filename' => $file,
+                'filename' => $filePath,
             ));
 
             $item->setId($helper->idEncode($item->getBasename()));

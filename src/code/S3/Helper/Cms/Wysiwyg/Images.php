@@ -42,6 +42,7 @@ class Made_S3_Helper_Cms_Wysiwyg_Images extends Mage_Cms_Helper_Wysiwyg_Images
         $storageRoot = preg_replace('#/$#', '', $storageRoot);
         if (preg_match('#^kraken://#', $storageRoot)) {
             $path = $this->idDecode($id);
+            $path = preg_replace('#([^:])//#', '$1/', $path);
             if (!strstr($path, $storageRoot)) {
                 $path = $storageRoot . DS . $path;
             }

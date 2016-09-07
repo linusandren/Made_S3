@@ -4,7 +4,7 @@ Add ”kraken_status” TEXT to catalog_product_entity_media_gallery to determin
 Create a helper method that takes a gallery, loops through it and crosschecks all kraken_status entries to see if any new resize needs to be dispatched. Empty status = dispatch all.
 On media gallery save, pass the gallery to the helper method so it resizes
 On media gallery load, pass the gallery to the helper method so it can be resized, use a guard to prevent this/make this happen when doing batch jobs
-When dispatching the resize event, store a key with the resize array and kraken dispatch ID in redis temporarily
+When dispatching the resize event, store a key with the resize array and kraken dispatch ID in mysql/kraken_status temporarily
 When the callback_url is requested, update the kraken_status array to make sure that all images are available with regards to resize information
     - Fetch the resize information using the kraken dispatch ID
     - Update kraken_status
