@@ -129,12 +129,16 @@ class Kraken_StreamWrapper
                 $callback = Mage::getUrl('made_s3/kraken/callback',
                     array('_store' => $defaultStoreId));
 
-                $this->_request(array(
+                $response = $this->_request(array(
                     'wait' => false,
                     'callback_url' => $callback,
                     'url' => $url,
                     'resize' => $resizeSettings,
                 ), 'url');
+
+                if ($response['success'] === false) {
+                    Mage::log($response['message'], null, 'kraken.log');
+                }
             }
         }
         return $renameResult;

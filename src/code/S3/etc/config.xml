@@ -13,6 +13,11 @@
                     <wysiwyg_images_storage>Made_S3_Model_Cms_Wysiwyg_Images_Storage</wysiwyg_images_storage>
                 </rewrite>
             </cms>
+            <catalog>
+                <rewrite>
+                    <product_image>Made_S3_Model_Product_Image</product_image>
+                </rewrite>
+            </catalog>
         </models>
         <blocks>
             <made_s3>

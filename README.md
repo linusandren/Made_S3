@@ -1,5 +1,7 @@
 # S3/Kraken module for Magento
 
+# This module disables Magento's core image manipulation
+
 A module that when enabled is supposed to replace all media related operations from working on disk, to work on S3.
 
 This obviously comes with some caveats, such as resizing not being done on demand as part of templates anymore. Instead, resize configurations are set up in admin and then referenced in templates. The actual resizing is done on upload or by a background job (TO DO).
