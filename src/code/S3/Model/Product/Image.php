@@ -16,19 +16,19 @@ class Made_S3_Model_Product_Image extends Mage_Catalog_Model_Product_Image
      * @param string $filename
      * @return bool
      */
-    protected function _fileExists($filename)
-    {
-        return true;
-    }
-
-    /**
-     * I guess we can't know if kraken has memory
-     *
-     * @param null $filename
-     * @return bool
-     */
-    protected function _checkMemory($file = NULL)
-    {
-        return true;
-    }
+//    protected function _fileExists($filename)
+//    {
+//        return true;
+//    }
+//
+//    /**
+//     * I guess we can't know if kraken has memory
+//     *
+//     * @param null $filename
+//     * @return bool
+//     */
+//    protected function _checkMemory($file = NULL)
+//    {
+//        return true;
+//    }
 }

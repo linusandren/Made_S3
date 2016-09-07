@@ -14,25 +14,15 @@ class Made_S3_Model_Observer
      */
     public function getImageCdnUrl(Varien_Event_Observer $observer)
     {
-        $config = Mage::getConfig();
-        $s3 = $config->getNode('global/s3');
-        if ($s3 !== false) {
-            $active = (int)$s3->active;
-            if ($active === 1) {
-                $cdnUrl = Mage::getStoreConfig('system/s3/cdn_url');
-                if (empty($cdnUrl)) {
-                    return;
-                }
-
-                $result = $observer->getEvent()->getResult();
-                $imageInstance = $observer->getEvent()->getImageInstance();
-
-                $helper = Mage::helper('made_s3');
-                $settingsKey = $helper->getKrakenSettingsKeyFromCoreSettings($imageInstance);
-                $mediaUrl = $helper->getImageCdnUrl($imageInstance->getNewFile(), $settingsKey);
-
-                $result->setUrl($mediaUrl);
-            }
+        $cdnUrl = Mage::getStoreConfig('system/s3/cdn_url');
+        if (empty($cdnUrl)) {
+            return;
         }
+        $result = $observer->getEvent()->getResult();
+        $imageInstance = $observer->getEvent()->getImageInstance();
+        $baseDir = Mage::getBaseDir('media');
+        $path = str_replace($baseDir . DS, "", $imageInstance->getNewFile());
+        $mediaUrl = $cdnUrl . $path;
+        $result->setUrl($mediaUrl);
     }
 }
