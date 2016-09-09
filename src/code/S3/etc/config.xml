@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
     <modules>
-        <Made_S3>1.0.1</Made_S3>
+        <Made_S3>
+            <version>1.0.2</version>
+        </Made_S3>
     </modules>
     <global>
         <models>
@@ -13,11 +15,6 @@
                     <wysiwyg_images_storage>Made_S3_Model_Cms_Wysiwyg_Images_Storage</wysiwyg_images_storage>
                 </rewrite>
             </cms>
-            <!--<catalog>-->
-                <!--<rewrite>-->
-                    <!--<product_image>Made_S3_Model_Product_Image</product_image>-->
-                <!--</rewrite>-->
-            <!--</catalog>-->
         </models>
         <blocks>
             <made_s3>
@@ -65,6 +62,33 @@
                     </get_image_cdn_url>
                 </observers>
             </made_image_geturl>
+            <made_image_is_cached>
+                <observers>
+                    <file_exists_check_db>
+                        <type>singleton</type>
+                        <model>made_s3/observer</model>
+                        <method>madeImageIsCached</method>
+                    </file_exists_check_db>
+                </observers>
+            </made_image_is_cached>
+            <made_image_savefile>
+                <observers>
+                    <save_path_to_db>
+                        <type>singleton</type>
+                        <model>made_s3/observer</model>
+                        <method>madeImageSaveFile</method>
+                    </save_path_to_db>
+                </observers>
+            </made_image_savefile>
+            <made_image_output_before>
+                <observers>
+                    <maybe_use_kraken>
+                        <type>singleton</type>
+                        <model>made_s3/observer</model>
+                        <method>madeImageOutputBefore</method>
+                    </maybe_use_kraken>
+                </observers>
+            </made_image_output_before>
         </events>
     </frontend>
     <adminhtml>

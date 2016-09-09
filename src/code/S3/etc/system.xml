@@ -11,19 +11,6 @@
                     <show_in_website>1</show_in_website>
                     <show_in_store>1</show_in_store>
                     <fields>
-                        <kraken_settings translate="label comment">
-                            <label>Kraken Processing Settings</label>
-                            <comment><![CDATA[
-                            These settings determine how product images should be resized and how arbitrary uploaded images should be processed. In the case of a product image, a "key" is used to identify resizing parameters which can later be referenced in templates. For CMS images, the key is a regular expression which should match any directory structure on S3 (`#' is used as a delimiter).
-                            <br><br><a href="https://kraken.io/docs/image-resizing" target="_blank">Click here for documentation of the different Kraken settings.</a>
-                            ]]> </comment>
-                            <frontend_model>made_s3/system_config_krakenSettings</frontend_model>
-                            <backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
-                            <sort_order>100</sort_order>
-                            <show_in_default>1</show_in_default>
-                            <show_in_website>0</show_in_website>
-                            <show_in_store>0</show_in_store>
-                        </kraken_settings>
                         <cdn_url translate="label comment">
                             <label>CDN URL</label>
                             <comment>The URL (preferably HTTPS) CDN distribution which uses the bucket set in local.xml as origin.</comment>

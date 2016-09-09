@@ -82,69 +82,6 @@ class Kraken_StreamWrapper
     }
 
     /**
-     * Overridden due to the sheer fact that the only time Magento uses rename()
-     * for mediais when a product is saved in admin with a newly uploaded
-     * image. This is in other words the perfect place to dispatch asynchronous
-     * resizing of all product images.
-     *
-     * @param $path_from
-     * @param $path_to
-     */
-    public function rename($path_from, $path_to)
-    {
-        $renameResult = $this->__call('rename', array($path_from, $path_to));
-        if ($renameResult && preg_match('#/catalog_product/#', $_SERVER['REQUEST_URI'])) {
-            $helper = Mage::helper('made_s3');
-            $settings = $helper->getKrakenSettings();
-            if (!empty($settings)) {
-                $resizeSettings = array();
-                $i = 1;
-                foreach ($settings as $setting) {
-                    if ($setting['type'] !== 'product') {
-                        continue;
-                    }
-                    $resizeSetting = array(
-                        'id' => $i,
-                        'width' => $setting['resize_width'],
-                        'height' => $setting['resize_height'],
-                        'strategy' => $setting['resize_strategy'],
-                        'enhance' => $setting['enhance']
-                    );
-                    if (!empty($setting['crop_mode'])) {
-                        $resizeSetting['crop_mode'] = $setting['crop_mode'];
-                    }
-                    $resizeSetting['storage_path'] = 'media/' . $helper->getKrakenResizePath($setting)
-                        . basename($path_to);
-                    $resizeSettings[] = $resizeSetting;
-                    $i++;
-                }
-
-                // $url contains the URL to the image that kraken should optimize
-                $url = $helper->convertKrakenUrlToMediaUrl($path_to);
-
-                $defaultStoreId = Mage::app()
-                    ->getWebsite(true)
-                    ->getDefaultGroup()
-                    ->getDefaultStoreId();
-                $callback = Mage::getUrl('made_s3/kraken/callback',
-                    array('_store' => $defaultStoreId));
-
-                $response = $this->_request(array(
-                    'wait' => false,
-                    'callback_url' => $callback,
-                    'url' => $url,
-                    'resize' => $resizeSettings,
-                ), 'url');
-
-                if ($response['success'] === false) {
-                    Mage::log($response['message'], null, 'kraken.log');
-                }
-            }
-        }
-        return $renameResult;
-    }
-
-    /**
      * We don't need to work with streams here
      *
      * @param $path
@@ -182,43 +119,16 @@ class Kraken_StreamWrapper
      */
     public function stream_flush()
     {
-        $resizeSetting = array();
-        $helper = Mage::helper('made_s3');
-        $settings = $helper->getKrakenSettings();
-        if (!empty($settings)) {
-            // Product image resizes are done when the images is rename()d
-            // after it's uploaded, when the product is saved. This means
-            // product image imports are a problem for our resizes at this
-            // moment, but we also want a utility to cover that for us
-            foreach ($settings as $setting) {
-                if ($setting['type'] !== 'cms') {
-                    continue;
-                }
-                if (preg_match("#{$setting['key']}#", $this->_path)) {
-                    $resizeSetting = array(
-                        'width' => $setting['resize_width'],
-                        'height' => $setting['resize_height'],
-                        'strategy' => $setting['resize_strategy'],
-                        'enhance' => $setting['enhance']
-                    );
-                    if (!empty($setting['crop_mode'])) {
-                        $resizeSetting['crop_mode'] = $setting['crop_mode'];
-                    }
-                    $resizeSetting = array('resize' => $resizeSetting);
-                    break;
-                }
-            }
-        }
         $filename = tempnam(Mage::getBaseDir('tmp'), 'kraken_');
         $s3Path = preg_replace('#^kraken://' . self::$options['s3_bucket'] . '/#', '', $this->_path);
         file_put_contents($filename, $this->_body);
-        $result = $this->_request(array_merge($resizeSetting, array(
+        $result = $this->_request(array(
             'file' => $filename,
             'wait' => true,
             's3_store' => array(
                 'path' => $s3Path,
             )
-        )), 'upload');
+        ), 'upload');
         unlink($filename);
         if ($result['success'] === false) {
             trigger_error('Error uploading image to Kraken: ' . $result['message'], E_USER_WARNING);

@@ -47,13 +47,15 @@ class Made_S3_Model_Processor
 
                 $krakenKey = (string)$s3->kraken_key;
                 $krakenSecret = (string)$s3->kraken_secret;
-                $kraken = new Kraken_Client($krakenKey, $krakenSecret);
-                Kraken_StreamWrapper::register($kraken, $s3client, array(
-                    's3_key' => $accessKeyId,
-                    's3_secret' => $accessSecret,
-                    's3_bucket' => $bucketName,
-                    's3_region' => $region,
-                ));
+                if (!empty($krakenKey) && !empty($krakenSecret)) {
+                    $kraken = new Kraken_Client($krakenKey, $krakenSecret);
+                    Kraken_StreamWrapper::register($kraken, $s3client, array(
+                        's3_key' => $accessKeyId,
+                        's3_secret' => $accessSecret,
+                        's3_bucket' => $bucketName,
+                        's3_region' => $region,
+                    ));
+                }
 
                 $appRoot = Mage::getRoot();
                 $root = dirname($appRoot);
