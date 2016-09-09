@@ -4,11 +4,9 @@
 
 A module that when enabled is supposed to replace all media related operations from working on disk, to work on S3.
 
-This obviously comes with some caveats, such as resizing not being done on demand as part of templates anymore. Instead, resize configurations are set up in admin and then referenced in templates. The actual resizing is done on upload or by a background job (TO DO).
-
 ## Magento Configuration
 
-The S3 configuration is done in local.xml. Since we need to take over media management at an early stage, using the Media Storage option can't be used. The local.xml section is in global and should look something like:
+The S3 configuration is done in local.xml. Since we need to take over media management at an early stage, the Media Storage option can't be used. The local.xml section is in global and should look something like:
 
 ```xml
 <s3>
@@ -47,7 +45,7 @@ Apart from this, the S3 bucket origin needs to be set up as the general media UR
 
 ## S3 configuration
 
-Apart from actually creating a bucket and generating access keys with write access to it, you also need to give it a public read policy. The reason for this is the above mentioned need to use the bucket URL as the normal media URL in magento. A public readable bucket policy can look like this:
+Apart from actually creating a bucket and generating access keys with write access to it, you also need to give it a public read policy. The reason for this is the above mentioned need to use the bucket URL as the normal media URL in Magento. A public readable bucket policy can look like this:
 
 ```json
 {
@@ -76,27 +74,7 @@ Due to the fact that all media is stored with the exact same structure as they w
 
 ## Kraken Image Processing
 
-Kraken is used for image processing and uploading to S3. This means all resize and processing settings are defined in advance, in `System / Configuration / Advanced / System / Amazon S3/Kraken/CDN Settings / Kraken Processing Settings`. Every type of image resize setting, whether it's processing of an arbitrary uploaded image or the batch resizing of product images, they need to be entered in there. When a product image is uploaded and the product is saved, all processing settings will be applied on the image, making sure everything is accessible in templates.
-
-### Referencing Resized Product Images
-
-In order to get an effective resize feature, all images are resized using Kraken when a product is saved with a new image in admin. This also meant that a new folder structure for resized images needed to be created. It also meant that a different method should be used in templates when displaysing images. The default image resizer touches the file system and creates one resized copy for every image. That's not very efficient and we don't need it at all since images are not resized on demand anymore.
-
-To use the new resize URL helper, replace
-
-```php
-<?php
-$this->helper('catalog/image')->init($_product, 'image');
-```
-
-with
-
-```php
-<?php
-$this->helper('made_s3')->getImageCdnUrl($_product->getImage(), 'main_image');
-```
-
-In this example, a key "main_image" has been created as a Kraken processing setting in admin.
+Kraken can be used for image optimization that will store the resulting image on S3. In order to activate this functionality, a kraken.io account is needed, and its credentials need to be set up as the local.xml instructions above.
 
 ## Notes
 
@@ -104,4 +82,5 @@ There is one core copy paste of Varien_Io_File. The reason is that the chdir() c
 
 ### Known Limitations
 
-* This module does not support watermarks or any other core image manipulation setting
+* This module does not support watermarks.
+* Placeholder images functionality is less flexible and requires a placeholder image to exist preferably as a config option. This is to keep s3:// operations at a minimum.
