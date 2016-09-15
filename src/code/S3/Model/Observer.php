@@ -129,4 +129,19 @@ class Made_S3_Model_Observer
             $result->setFileSaved(true);
         }
     }
+
+    /**
+     * Sets the asset base URL if defined in admin (honestly it should be)
+     *
+     * @param Varien_Event_Observer $observer
+     */
+    public function setAssetsBaseUrl(Varien_Event_Observer $observer)
+    {
+        $result = $observer->getResult();
+
+        $baseUrl = Mage::getStoreConfig('system/s3/cdn_url');
+        if (!empty($baseUrl)) {
+            $result->setBaseUrl($baseUrl);
+        }
+    }
 }

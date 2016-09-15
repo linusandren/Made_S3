@@ -66,6 +66,15 @@
                     </save_asset_target_file>
                 </observers>
             </made_assets_save_target_file>
+            <made_assets_set_base_url>
+                <observers>
+                    <set_assets_base_url>
+                        <type>singleton</type>
+                        <model>made_s3/observer</model>
+                        <method>setAssetsBaseUrl</method>
+                    </set_assets_base_url>
+                </observers>
+            </made_assets_set_base_url>
         </events>
     </global>
     <frontend>
