@@ -9,8 +9,6 @@ class Made_S3_Helper_Data extends Mage_Core_Helper_Abstract
 {
     protected static $_client;
 
-    protected $_krakenSettings;
-
     /**
      * Return a (cached) S3 client instance
      */
@@ -43,5 +41,58 @@ class Made_S3_Helper_Data extends Mage_Core_Helper_Abstract
         $cdnUrl = Mage::getStoreConfig('system/s3/cdn_url');
         $url = $cdnUrl . $path;
         return $url;
+    }
+
+    /**
+     * Fetches a row from the guard table
+     *
+     * @param $source
+     * @param $target
+     * @return mixed
+     */
+    public function getGuardRow($source, $target)
+    {
+        $resource = Mage::getSingleton('core/resource');
+        $readConnection = $resource->getConnection('core_read');
+        $tableName = $resource->getTableName('made_s3_storage_guard');
+        $query = "SELECT * FROM $tableName WHERE source_path = :source_path AND target_path = :target_path";
+        $result = $readConnection->query($query, array(
+            'source_path' => $source,
+            'target_path' => $target,
+        ));
+        $row = $result->fetch();
+        return $row;
+    }
+
+    /**
+     * Looks up a row in the guard table
+     *
+     * @param $source
+     * @param $target
+     * @return boolean
+     */
+    public function lookupGuardRow($source, $target)
+    {
+        $row = $this->getGuardRow($source, $target);
+        $lookupResult = $row !== false && count($row);
+        return $lookupResult;
+    }
+
+    /**
+     * Inserts a row into the guard table
+     *
+     * @param $source
+     * @param $target
+     */
+    public function insertGuardRow($source, $target)
+    {
+        $resource = Mage::getSingleton('core/resource');
+        $writeConnection = $resource->getConnection('core_write');
+        $tableName = $resource->getTableName('made_s3_storage_guard');
+        $query = "REPLACE INTO $tableName (source_path, target_path) VALUES (:source_path, :target_path)";
+        $writeConnection->query($query, array(
+            'source_path' => $source,
+            'target_path' => $target,
+        ));
     }
 }

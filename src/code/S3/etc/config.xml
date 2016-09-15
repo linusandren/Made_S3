@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Made_S3>
-            <version>1.0.2</version>
+            <version>1.0.4</version>
         </Made_S3>
     </modules>
     <global>
@@ -38,6 +38,35 @@
                 </setup>
             </made_s3_setup>
         </resources>
+        <events>
+            <made_assets_merged_file_exists>
+                <observers>
+                    <file_exists_check_db_assets>
+                        <type>singleton</type>
+                        <model>made_s3/observer</model>
+                        <method>fileExistsCheckDbAssets</method>
+                    </file_exists_check_db_assets>
+                </observers>
+            </made_assets_merged_file_exists>
+            <made_assets_merged_file_mtime>
+                <observers>
+                    <merged_file_mtime>
+                        <type>singleton</type>
+                        <model>made_s3/observer</model>
+                        <method>mergedFileMtime</method>
+                    </merged_file_mtime>
+                </observers>
+            </made_assets_merged_file_mtime>
+            <made_assets_save_target_file>
+                <observers>
+                    <save_asset_target_file>
+                        <type>singleton</type>
+                        <model>made_s3/observer</model>
+                        <method>saveAssetTargetFile</method>
+                    </save_asset_target_file>
+                </observers>
+            </made_assets_save_target_file>
+        </events>
     </global>
     <frontend>
         <secure_url>

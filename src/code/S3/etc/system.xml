@@ -4,7 +4,7 @@
         <system translate="label" module="core">
             <groups>
                 <s3 translate="label">
-                    <label>Amazon S3/Kraken/CDN Settings</label>
+                    <label>Made_S3</label>
                     <frontend_type>text</frontend_type>
                     <sort_order>899</sort_order>
                     <show_in_default>1</show_in_default>
@@ -12,8 +12,8 @@
                     <show_in_store>1</show_in_store>
                     <fields>
                         <cdn_url translate="label comment">
-                            <label>CDN URL</label>
-                            <comment>The URL (preferably HTTPS) CDN distribution which uses the bucket set in local.xml as origin.</comment>
+                            <label>CDN Base URL</label>
+                            <comment>The Base URL (preferably HTTPS) CDN distribution which uses the bucket set in local.xml as origin. Needs to include /media/ in the path.</comment>
                             <frontend_type>text</frontend_type>
                             <sort_order>200</sort_order>
                             <show_in_default>1</show_in_default>

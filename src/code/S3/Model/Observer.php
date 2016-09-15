@@ -7,6 +7,7 @@
  */
 class Made_S3_Model_Observer
 {
+
     /**
      * Set the image cache CDN URL if entered in admin
      *
@@ -33,16 +34,12 @@ class Made_S3_Model_Observer
      */
     public function madeImageIsCached(Varien_Event_Observer $observer)
     {
-        $resource = Mage::getSingleton('core/resource');
-        $readConnection = $resource->getConnection('core_read');
-        $tableName = $resource->getTableName('made_s3_resize_guard');
-        $query = "SELECT * FROM $tableName WHERE original_image_path = :original_image_path AND resized_image_path = :resized_image_path";
-        $result = $readConnection->query($query, array(
-            'original_image_path' => $observer->getResult()->getBaseFilename(),
-            'resized_image_path' => $observer->getResult()->getNewFilename(),
-        ));
-        $row = $result->fetch();
-        if ($row !== false && count($row)) {
+        $lookupResult = Mage::helper('made_s3')->lookupGuardRow(
+            $observer->getResult()->getBaseFilename(),
+            $observer->getResult()->getNewFilename()
+        );
+
+        if ($lookupResult) {
             $observer->getEvent()->getResult()->setIsCached(true);
         } else {
             $observer->getEvent()->getResult()->setIsCached(false);
@@ -56,14 +53,10 @@ class Made_S3_Model_Observer
      */
     public function madeImageSaveFile(Varien_Event_Observer $observer)
     {
-        $resource = Mage::getSingleton('core/resource');
-        $writeConnection = $resource->getConnection('core_write');
-        $tableName = $resource->getTableName('made_s3_resize_guard');
-        $query = "INSERT IGNORE INTO $tableName (original_image_path, resized_image_path) VALUES (:original_image_path, :resized_image_path)";
-        $writeConnection->query($query, array(
-            'original_image_path' => $observer->getBaseFilename(),
-            'resized_image_path' => $observer->getNewFilename(),
-        ));
+        Mage::helper('made_s3')->insertGuardRow(
+            $observer->getBaseFilename(),
+            $observer->getNewFilename()
+        );
     }
 
     /**
@@ -79,6 +72,61 @@ class Made_S3_Model_Observer
             $arguments = $observer->getResult()->getArguments();
             $arguments[1] = preg_replace('#^s3:#', 'kraken:', $arguments[1]);
             $observer->getResult()->setArguments($arguments);
+        }
+    }
+
+    /**
+     * Does a lookup for assets in the database
+     *
+     * @param Varien_Event_Observer $observer
+     */
+    public function fileExistsCheckDbAssets(Varien_Event_Observer $observer)
+    {
+        $result = $observer->getResult();
+        $lookupResult = Mage::helper('made_s3')->lookupGuardRow(
+            $result->getTargetFile(),
+            $result->getTargetFile()
+        );
+        $result->setTargetFileExists($lookupResult);
+    }
+
+    /**
+     * Fetches the mtime from the database
+     *
+     * @param Varien_Event_Observer $observer
+     */
+    public function mergedFileMtime(Varien_Event_Observer $observer)
+    {
+        $result = $observer->getResult();
+        $row = Mage::helper('made_s3')->getGuardRow(
+            $result->getTargetFile(),
+            $result->getTargetFile()
+        );
+        if (!empty($row)) {
+            $mtime = strtotime($row['created_at']);
+            $result->setTargetFileMtime($mtime);
+        }
+
+    }
+
+    /**
+     * Save the assets file to s3://
+     *
+     * @param Varien_Event_Observer $observer
+     */
+    public function saveAssetTargetFile(Varien_Event_Observer $observer)
+    {
+        $result = $observer->getResult();
+        $saveResult = file_put_contents(
+            $result->getTargetFile(),
+            $result->getFileData()
+        );
+        if ($saveResult !== false) {
+            Mage::helper('made_s3')->insertGuardRow(
+                $result->getTargetFile(),
+                $result->getTargetFile()
+            );
+            $result->setFileSaved(true);
         }
     }
 }
