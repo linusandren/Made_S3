@@ -4,6 +4,13 @@
 
 A module that when enabled is supposed to replace all media related operations from working on disk, to work on S3.
 
+## Dependencies
+
+This module requires
+
+* Made\_Assets > e3856459e0a500f3aa823f74747e83e813231091
+* Made\_Image > 4eadcf85f9e6d3eba35b217e0d13098b1f8731e8
+
 ## Magento Configuration
 
 The S3 configuration is done in local.xml. Since we need to take over media management at an early stage, the Media Storage option can't be used. The local.xml section is in global and should look something like:
