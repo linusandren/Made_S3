@@ -6,7 +6,7 @@
  *
  * @author jonathan@madepeople.se
  */
-class Made_S3_Helper_Cms_Wysiwyg_Images extends Mage_Cms_Helper_Wysiwyg_Images
+class Made_S3_Helper_Cms_Wysiwyg_Images extends Made_Admin_Helper_Cms_Wysiwyg_Images
 {
 
     /**
@@ -79,5 +79,28 @@ class Made_S3_Helper_Cms_Wysiwyg_Images extends Mage_Cms_Helper_Wysiwyg_Images
             }
         }
         return $this->_currentPath;
+    }
+
+
+    /**
+     * Images Storage root directory
+     *
+     * This is copy pasted from core because the Made_Admin core fix actually
+     * breaks S3
+     *
+     * @return string
+     */
+    public function getStorageRoot()
+    {
+        if (!$this->_storageRoot) {
+            $path = Mage::getConfig()->getOptions()->getMediaDir()
+                . DS . Mage_Cms_Model_Wysiwyg_Config::IMAGE_DIRECTORY;
+            $this->_storageRoot = realpath($path);
+            if (!$this->_storageRoot) {
+                $this->_storageRoot = $path;
+            }
+            $this->_storageRoot .= DS;
+        }
+        return $this->_storageRoot;
     }
 }

@@ -5,6 +5,8 @@
             <active>true</active>
             <codePool>community</codePool>
             <depends>
+                <Made_Admin />
+                <Made_Assets />
                 <Made_Image />
             </depends>
         </Made_S3>
