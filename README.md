@@ -8,6 +8,7 @@ A module that when enabled is supposed to replace all media related operations f
 
 This module requires
 
+* Made\_Admin > e9024f1f7b78df0cec4e469d9fcfb4827173ecad
 * Made\_Assets > e3856459e0a500f3aa823f74747e83e813231091
 * Made\_Image > 4eadcf85f9e6d3eba35b217e0d13098b1f8731e8
 
