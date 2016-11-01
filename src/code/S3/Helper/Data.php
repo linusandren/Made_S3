@@ -55,7 +55,7 @@ class Made_S3_Helper_Data extends Mage_Core_Helper_Abstract
         $resource = Mage::getSingleton('core/resource');
         $readConnection = $resource->getConnection('core_read');
         $tableName = $resource->getTableName('made_s3_storage_guard');
-        $query = "SELECT * FROM $tableName WHERE source_path = :source_path AND target_path = :target_path";
+        $query = "SELECT * FROM $tableName WHERE BINARY source_path = :source_path AND BINARY target_path = :target_path";
         $result = $readConnection->query($query, array(
             'source_path' => $source,
             'target_path' => $target,
