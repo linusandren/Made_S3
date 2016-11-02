@@ -144,4 +144,16 @@ class Made_S3_Model_Observer
             $result->setBaseUrl($baseUrl);
         }
     }
+
+    /**
+     * Sets various options relating to S3 things
+     *
+     * @param Varien_Event_Observer $observer
+     */
+    public function setOptions(Varien_Event_Observer $observer)
+    {
+        $designPackage = Mage::getSingleton('core/design_package');
+        $designPackage->setSkipInitMergedDir(true);
+        Mage::helper('made_image/image')->setMinimizeStat(true);
+    }
 }

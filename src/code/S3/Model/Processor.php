@@ -68,6 +68,7 @@ class Made_S3_Model_Processor
 
                 $uploadDir = $mediaDir . DS . 'upload';
 
+                Mage::register('made_s3_original_media_dir', $options->getData('media_dir'));
                 $options->setData('media_dir', $mediaDir);
                 $options->setData('upload_dir', $uploadDir);
             }

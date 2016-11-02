@@ -75,6 +75,15 @@
                     </set_assets_base_url>
                 </observers>
             </made_assets_set_base_url>
+            <controller_front_init_before>
+                <observers>
+                    <made_s3_set_options>
+                        <type>singleton</type>
+                        <model>made_s3/observer</model>
+                        <method>setOptions</method>
+                    </made_s3_set_options>
+                </observers>
+            </controller_front_init_before>
         </events>
     </global>
     <frontend>
