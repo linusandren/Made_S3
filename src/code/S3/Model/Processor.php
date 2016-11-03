@@ -73,5 +73,8 @@ class Made_S3_Model_Processor
                 $options->setData('upload_dir', $uploadDir);
             }
         }
+
+        // Don't change other request processor's results
+        return $content;
     }
 }
