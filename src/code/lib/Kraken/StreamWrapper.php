@@ -172,6 +172,10 @@ class Kraken_StreamWrapper
                 'secret' => self::$options['s3_secret'],
                 'bucket' => self::$options['s3_bucket'],
                 'region' => self::$options['s3_region'],
+                'headers' => array(
+                    'Cache-Control' => 'max-age=2592000000',
+                    'Expires' => '2026-04-04T12:06:11+00:00'
+                )
             )
         ), $options));
         return $result;
