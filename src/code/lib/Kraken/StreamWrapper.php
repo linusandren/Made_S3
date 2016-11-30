@@ -33,7 +33,7 @@ class Kraken_StreamWrapper
      * @param array $options
      */
     public static function register(Kraken_Client $client, \Aws\S3\S3Client $s3Client,
-                                    array $options)
+                                    Aws\S3\StreamWrapper $s3StreamWrapper, array $options)
     {
         if (!in_array('kraken', stream_get_wrappers())) {
             stream_wrapper_register('kraken', __CLASS__, STREAM_IS_URL);
@@ -42,9 +42,6 @@ class Kraken_StreamWrapper
         self::$client = $client;
         self::$s3Client = $s3Client;
         self::$options = $options;
-
-        $s3StreamWrapper = new Aws\S3\StreamWrapper;
-        $s3StreamWrapper::register($s3Client);
         self::$s3StreamWrapper = $s3StreamWrapper;
     }
 

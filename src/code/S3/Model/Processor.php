@@ -45,11 +45,14 @@ class Made_S3_Model_Processor
                 ));
                 Made_S3_Helper_Data::setClient($s3client);
 
+                $s3StreamWrapper = new Aws\S3\StreamWrapper;
+                $s3StreamWrapper::register($s3client);
+
                 $krakenKey = (string)$s3->kraken_key;
                 $krakenSecret = (string)$s3->kraken_secret;
                 if (!empty($krakenKey) && !empty($krakenSecret)) {
                     $kraken = new Kraken_Client($krakenKey, $krakenSecret);
-                    Kraken_StreamWrapper::register($kraken, $s3client, array(
+                    Kraken_StreamWrapper::register($kraken, $s3client, $s3StreamWrapper, array(
                         's3_key' => $accessKeyId,
                         's3_secret' => $accessSecret,
                         's3_bucket' => $bucketName,
