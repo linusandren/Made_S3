@@ -120,6 +120,7 @@ class Made_S3_Model_Observer
         $saveResult = file_put_contents(
             $result->getTargetFile(),
             $result->getFileData(),
+        // add expires header to the file.
             stream_context_create(array(
                 's3' => array(
                     'CacheControl' => 'max-age=31536000'
