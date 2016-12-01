@@ -119,7 +119,12 @@ class Made_S3_Model_Observer
         $result = $observer->getResult();
         $saveResult = file_put_contents(
             $result->getTargetFile(),
-            $result->getFileData()
+            $result->getFileData(),
+            stream_context_create(array(
+                's3' => array(
+                    'CacheControl' => 'max-age=31536000'
+                )
+            ))
         );
         if ($saveResult !== false) {
             Mage::helper('made_s3')->insertGuardRow(
